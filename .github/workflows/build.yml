@@ -11,15 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Pull SBF builder
-        run: docker pull ghcr.io/anza-xyz/sbf-tools:1.18
+      - name: Pull Solana 1.18 builder
+        run: docker pull solanalabs/solana:1.18.26
 
-      - name: Build Solana program
+      - name: Build Solana program (SBF)
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/work" \
             -w /work \
-            ghcr.io/anza-xyz/sbf-tools:1.18 \
+            solanalabs/solana:1.18.26 \
             cargo build-sbf --release
 
       - name: Upload program artifact
@@ -27,4 +27,3 @@ jobs:
         with:
           name: fogo_program
           path: target/deploy/*.so
-
