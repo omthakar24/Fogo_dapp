@@ -4,11 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [lib]
+crate-type = ["cdylib", "lib"]
 name = "fogo_program"
-crate type = ["cdylib", "lib"]
 
 [dependencies]
-solana_program = "1.18.26"
+solana-program = "1.18.26"
+borsh = "0.10.3"
+borsh-derive = "0.10.3"
 
 [features]
-no entrypoint = []
+no-entrypoint = []
