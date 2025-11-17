@@ -1,0 +1,29 @@
+name: Build SBF
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pull S B F builder
+        run: docker pull projectserum/build:latest
+
+      - name: Build Solana program
+        run: |
+          docker run --rm \
+            -v "\${{ github.workspace }}:/work" \
+            -w /work \
+            projectserum/build:latest \
+            cargo build-sbf --release
+
+      - name: Upload program artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fogo_program
+          path: target/deploy/*.so
